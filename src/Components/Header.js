@@ -3,7 +3,9 @@ import React from 'react';
 export default function Header (props) {
   return (
     <header>
-      <span class='headerLink' onClick={props.toHome}>Home</span>
+      <span className='headerLink' onClick={props.toHome}>Home</span>
+      <br/>
+      {"(Click to Return to First Card)"}
     </header>
   )
 } 

@@ -15,11 +15,11 @@ export default class Card extends Component {
   render () {
     let cardIndex = this.props.currCard;
     let cardList = this.props.cardList;
-    let favoriteMovies = cardList[cardIndex].favoriteMovies.map(el=> (
-      <li>{el}</li>
+    let favoriteMovies = cardList[cardIndex].favoriteMovies.map((el,index)=> (
+      <li key={index}>{el}</li>
     ))
     return (
-      <div class='card'>
+      <div className='card'>
         <aside id='counter'>{cardIndex+1}/{cardList.length}</aside>
         <h1>{cardList[cardIndex].name}</h1>
         <br/>

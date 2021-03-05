@@ -3,9 +3,13 @@
   box-sizing: border-box;
 }
 
+header, .cardBox, .card, .nexPrevBox {
+  width:60vw;
+}
+
 .cardBox{
   display:flex;
-  align-content: center;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
 }
@@ -13,14 +17,13 @@
 header, button {
   background-color: #34A5DA;
   color:black;
-
 }
 
 header {
   display:flex;
-  justify-content:start;
-  align-items: center;
-  width:60vw;
+  justify-content:center;
+  align-items: start;
+  flex-direction: column;
   height:100px;
   padding-left: 50px;
 }
@@ -28,6 +31,8 @@ header {
 .headerLink {
   font-size: 20pt;
   font-weight: bold;
+  line-height: 0px;
+  z-index: 2;
 }
 .card {
   background-color: #EBEBEB;
@@ -85,6 +90,10 @@ ol {
   justify-content:center;
   position:relative;
   bottom:40px;
+  z-index: 2;
+  width:300px;
+  height:auto;
+
 }
 
 .edDelNewButton{
