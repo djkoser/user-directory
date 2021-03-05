@@ -3,13 +3,14 @@ import './App.css';
 import Header from './Components/Header';
 import Card from './Components/Card';
 import NextPrev from './Components/NextPrev';
-import EditDeleteNew from './Components/EditDeleteNew'
+import EditDeleteNew from './Components/EditDeleteNew';
+import data from './data.js';
 
 export default class App extends Component {
   constructor (props) {
     super(props); 
     this.state = {
-      cardList:[{name:"Marion Santori", from:"Liverpool, United Kingdom", jobTitle:"Research Associate", employer:"Skinix", favoriteMovies:['Fathom','Strange Magic', 'Martian Child']}, {name:"Marion Santori2", from:"Liverpool, United Kingdom2", jobTitle:"Research Associate2", employer:"Skinix2", favoriteMovies:['Fathom2','Strange Magic2', 'Martian Child2']}, {name:"Marion Santori3", from:"Liverpool, United Kingdom3", jobTitle:"Research Associate3", employer:"Skinix3", favoriteMovies:['Fathom3','Strange Magic3', 'Martian Child3']}, {name:"Marion Santori4", from:"Liverpool, United Kingdom4", jobTitle:"Research Associate4", employer:"Skinix4", favoriteMovies:['Fathom4','Strange Magic4', 'Martian Child4']}, {name:"Marion Santori5", from:"Liverpool, United Kingdom5", jobTitle:"Research Associate5", employer:"Skinix5", favoriteMovies:['Fathom5','Strange Magic5', 'Martian Child5']}],
+      cardList: data,
       currentCard: 0
     };
     this.incCard=this.incDecCard.bind(this,true);

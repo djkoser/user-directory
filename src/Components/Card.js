@@ -21,10 +21,10 @@ export default class Card extends Component {
     return (
       <div className='card'>
         <aside id='counter'>{cardIndex+1}/{cardList.length}</aside>
-        <h1>{cardList[cardIndex].name}</h1>
+        <h1>{cardList[cardIndex].name.first} {cardList[cardIndex].name.last}</h1>
         <br/>
-        <h2><strong>From: </strong>{cardList[cardIndex].from}</h2>
-        <h2><strong>Job Title: </strong>{cardList[cardIndex].jobTitle}</h2>
+        <h2><strong>From: </strong>{cardList[cardIndex].city}, {cardList[cardIndex].country}</h2>
+        <h2><strong>Job Title: </strong>{cardList[cardIndex].title}</h2>
         <h2><strong>Employer: </strong>{cardList[cardIndex].employer}</h2>
         <br/>
         <br/>
