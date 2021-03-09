@@ -3,9 +3,9 @@ import React from 'react';
 export default function EditDeleteNew (props) {
   return (
     <div className='edDelNewBox'>
-      <button className='edDelNewButton'>Edit</button>
-      <button className='edDelNewButton'>Delete</button>
-      <button className='edDelNewButton'>New</button>
+      <button onClick={props.deleteCard} className='edDelNewButton'>Delete</button>
+      <button onClick={props.toggleNew} className='edDelNewButton'>New</button>
+      <button onClick={props.toggleEdit} className='edDelNewButton'>Edit</button>
     </div>
   )
 }

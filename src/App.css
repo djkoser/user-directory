@@ -57,12 +57,14 @@ aside {
   font-size:25pt;
   font-weight:900;
   position:absolute;
-  right:23vw;
+  right: 22vw;
+  bottom: 65vh;
 }
 h3 {
   margin:0px;
   line-height: 2px;
   font-size:16pt;
+  margin-bottom:20px;
 }
 ol {
   padding-left: 80px;
@@ -72,9 +74,10 @@ ol {
 .nexPrevBox{
   display:flex;
   justify-content: space-between;
-  padding: 0;
   border: none;
   background: none;
+  position:relative;
+  bottom:50px
 }
 .nxPrvButton {
   background-color: transparent;
@@ -82,14 +85,11 @@ ol {
   color:white;
   font-weight: 950;
   font-size: 20pt;
-  margin-top:10px;
 }
 
 .edDelNewBox{
   display:flex;
   justify-content:center;
-  position:relative;
-  bottom:40px;
   z-index: 2;
   width:300px;
   height:auto;
@@ -105,5 +105,9 @@ ol {
   padding-left:20px;
   padding-right:20px;
   color: white;
+}
+.movieInput {
+  height:10vh;
+  width:30vw;
 }
 
