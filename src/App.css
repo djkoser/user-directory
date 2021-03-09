@@ -7,6 +7,10 @@ header, .cardBox, .card, .nexPrevBox {
   width:60vw;
 }
 
+.invisible {
+  visibility:hidden;
+}
+
 .cardBox{
   display:flex;
   align-items: center;
@@ -57,8 +61,8 @@ aside {
   font-size:25pt;
   font-weight:900;
   position:absolute;
-  right: 22vw;
-  bottom: 65vh;
+  right: 25vw;
+  bottom: 60vh;
 }
 h3 {
   margin:0px;
@@ -110,4 +114,5 @@ ol {
   height:10vh;
   width:30vw;
 }
+
 

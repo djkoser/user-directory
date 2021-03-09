@@ -1,13 +1,7 @@
 import React, {Component} from 'react'; 
 import EditDeleteNew from './EditDeleteNew';
+import NextPrev from './NextPrev';
 
-
-// cardList={this.state.cardList} 
-// addCard={this.addCard} 
-// deleteCard={this.deleteCard}
-// currentCard={this.state.currentCard}
-// editToggle={this.state.editToggle}
-// newToggle={this.state.newToggle}
 export default class Card extends Component {
   constructor (props) {
     super(props); 
@@ -61,60 +55,107 @@ export default class Card extends Component {
         titleInput:"",
         favoriteMoviesInput:""
       })
+    };
+    
+    // Checks if deleteing last card to avoid errors related to deleting the last card in the deck
+    deleteCheck = (key) => {
+      if (this.props.cardList.length===1) {
+        this.setState({
+          newToggle:true,
+          editToggle:false
+        })
+      }
+      this.props.deleteCard(key);
     }
 
     toggleNewEdit = (boolean) => {
+      //New Togggle Logic
       if (boolean) {
         if (!this.state.newToggle) {
           this.setStateForNew()
+        } else if (this.state.newToggle) {
+          let {id, lastNameInput, firstNameInput, cityInput, countryInput, employerInput, titleInput, favoriteMoviesInput,newToggle,editToggle} = this.state;
+          let moviesArray= favoriteMoviesInput.split(",");
+          let newCard = {
+            id:this.props.cardList.length+1,
+            name:{first:firstNameInput, last:lastNameInput},
+            city:cityInput,
+            country:countryInput,
+            employer: employerInput,
+            title:titleInput,
+            favoriteMovies: moviesArray
+          }
+          this.props.addCard(newCard)
         }
         this.setState({
           newToggle: !this.state.newToggle
         })
+    // Edit toggle logic
       } else if (!boolean) {
         if (!this.state.editToggle) {
           this.setStateForEdit()
+        } else if (this.state.editToggle) {
+          let {id, lastNameInput, firstNameInput, cityInput, countryInput, employerInput, titleInput, favoriteMoviesInput,newToggle,editToggle} = this.state;
+          let moviesArray= favoriteMoviesInput.split(",");
+          let editedCard = {
+            id:this.props.cardList[this.props.currentCard],
+            name:{first:firstNameInput, last:lastNameInput},
+            city:cityInput,
+            country:countryInput,
+            employer: employerInput,
+            title:titleInput,
+            favoriteMovies: moviesArray
+          }
+          let editedCardList = [...this.props.cardList];
+          editedCardList[this.props.currentCard] = editedCard;
+          this.props.applyEdit(editedCardList);
         }
         this.setState({
-          editToggle: !this.state.editToggle,
-        })
-      }
+          editToggle: !this.state.editToggle
+      })
     }
+  }
+
 
   render () {
+    let {id, lastNameInput, firstNameInput, cityInput, countryInput, employerInput, titleInput, favoriteMoviesInput,newToggle,editToggle} = this.state;
     let cardIndex = this.props.currentCard;
-    let cardList = this.props.cardList;
-    const favoriteMovies = cardList[cardIndex].favoriteMovies.map((el, index) => (<li key={index}>{el}</li>));
+    let favoriteMovies;
+    let cardList = [...this.props.cardList]
     let cardContent;
     let aside;
-    if (this.state.editToggle || this.state.newToggle) {
+    // Prevent errors due to lack of renderable cords
+    if (cardList.length>0) {
+     favoriteMovies =  cardList[cardIndex].favoriteMovies.map((el, index) => (<li key={index}>{el}</li>));
+      }
+    if (editToggle || newToggle) {
       // Edit and New view
       cardContent = (
       <div className='card'>
         <h1>
-          <input type='text' placeholder='First name' onChange={e=> (this.handleChange('firstNameInput',e.target.value))} value={this.state.firstNameInput}></input>
-          <input type='text' placeholder='Last Name' onChange={e=> (this.handleChange('lastNameInput',e.target.value))} value={this.state.lastNameInput}></input>
+          <input type='text' placeholder='First name' onChange={e=> (this.handleChange('firstNameInput',e.target.value))} value={firstNameInput}></input>
+          <input type='text' placeholder='Last Name' onChange={e=> (this.handleChange('lastNameInput',e.target.value))} value={lastNameInput}></input>
         </h1>
         <br/>
         <h2><strong>From: </strong>
-        <input type='text' placeholder='City' onChange={e=> (this.handleChange('cityInput',e.target.value))} value={this.state.cityInput}></input>
-        <input type='text' placeholder='Country' onChange={e=> (this.handleChange('countryInput',e.target.value))} value={this.state.countryInput}></input>
+        <input type='text' placeholder='City' onChange={e=> (this.handleChange('cityInput',e.target.value))} value={cityInput}></input>
+        <input type='text' placeholder='Country' onChange={e=> (this.handleChange('countryInput',e.target.value))} value={countryInput}></input>
         </h2>
         <h2><strong>Job Title: </strong>
-        <input type='text' placeholder='Job Title' onChange={e=> (this.handleChange('titleInput',e.target.value))} value={this.state.titleInput}></input>
+        <input type='text' placeholder='Job Title' onChange={e=> (this.handleChange('titleInput',e.target.value))} value={titleInput}></input>
         </h2>
         <h2><strong>Employer: </strong>
-        <input type='text' placeholder='Employer' onChange={e=> (this.handleChange('employerInput',e.target.value))} value={this.state.employerInput}></input>
+        <input type='text' placeholder='Employer' onChange={e=> (this.handleChange('employerInput',e.target.value))} value={employerInput}></input>
         </h2>
         <br/>
         <br/>
         <h3>Favorite Movies</h3>
-        <textarea wrap='hard' className='movieInput' placeholder='Enter favorite movies separated by a comma' onChange={e=> (this.handleChange('favoriteMoviesInput',e.target.value))} value={this.state.favoriteMoviesInput}>
+        <textarea wrap='hard' className='movieInput' placeholder='Enter favorite movies separated by a comma' onChange={e=> (this.handleChange('favoriteMoviesInput',e.target.value))} value={favoriteMoviesInput}>
         </textarea>
       </div>
       );
-    }  else if (!this.props.newToggle && !this.props.editToggle) {
-      // Display only
+    }  else if (!newToggle && !editToggle) {
+      // Display only view
         cardContent = (
         <div className='card'>
           <h1>{cardList[cardIndex].name.first} {cardList[cardIndex].name.last}</h1>
@@ -131,10 +172,12 @@ export default class Card extends Component {
         </div>
       );
     }; 
-    if (this.state.newToggle) {
+
+    //Change aside/counter logic for adding cards
+    if (newToggle) {
       aside=<aside id='counter'>{cardList.length+1}/{cardList.length}</aside>
     } else {
-      aside = <aside id='counter'>{this.props.currentCard+1}/{cardList.length}</aside>}
+      aside = <aside id='counter'>{cardIndex+1}/{cardList.length}</aside>}
     return (
       <div className='cardBox'>
         {aside}
@@ -142,7 +185,18 @@ export default class Card extends Component {
         <EditDeleteNew 
           toggleNew={this.toggleNew} 
           toggleEdit={this.toggleEdit}
-          deleteCard={this.props.deleteCard}/>
+          deleteCard={this.deleteCheck}
+          currentCard={this.props.currentCard}
+          cardList={this.props.cardList}
+          editTogVal={this.state.editToggle}
+          newTogVal={this.state.newToggle}/>
+        <NextPrev 
+          incCard={this.props.incCard} 
+          decCard={this.props.decCard}
+          editTogVal={this.state.editToggle}
+          newTogVal={this.state.newToggle}
+          curCard={this.props.currentCard}
+          cardList={this.props.cardList}/>
       </div>
     ); 
   };

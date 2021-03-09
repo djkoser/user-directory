@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './App.css';
 import Card from './Components/Card';
 import Header from './Components/Header';
-import NextPrev from './Components/NextPrev';
 import data from './data';
 
 export default class App extends Component {
@@ -32,32 +31,37 @@ export default class App extends Component {
   addCard = (obj) => {
     const updatedList = [...this.state.cardList, obj]; 
     this.setState({
-      cardList:updatedList
+      cardList:updatedList,
+      currentCard:updatedList.length-1
     });
   };
+
+  applyEdit = (editedList) => {
+    this.setState({
+      cardList:editedList
+    })
+  }
   
   deleteCard = (id) => {
-    id=Number.parseInt(id);
+    id = Number.parseInt(id);
     const updatedList = [...this.state.cardList];
-    updatedList.forEach((e,ind,arr) => {
-      if (e===id) {
-        arr.splice(ind,1);
+    updatedList.forEach((e, ind, arr) => {
+      if (e.id === id) {
+        arr.splice(ind, 1);
       }
     })
-    updatedList.forEach((e, ind) => e.id=ind+1);
+    updatedList.forEach((e, ind) => e.id = ind + 1);
     this.setState({
-      cardList:updatedList
+      currentCard:this.state.currentCard>=updatedList.length?updatedList.length-1 : this.state.currentCard,
+      cardList: updatedList
     })
-  } 
+  }
 
   home = () => {
-    console.log('fired')
     this.setState({
       currentCard: 0
     });
   };
-
-
 
   render(){
     return (
@@ -68,10 +72,9 @@ export default class App extends Component {
           currentCard={this.state.currentCard}
           addCard={this.addCard}
           deleteCard={this.deleteCard}
-          />
-        <NextPrev
           incCard={this.incCard}
-          decCard={this.decCard}/>
+          decCard={this.decCard}
+          applyEdit={this.applyEdit}/>
       </div>
     )
   };
